@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พยากรณ์ผล Titanic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .survival-high {
+            color: green;
+            font-weight: bold;
+        }
+        .survival-low {
+            color: gray;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- เมนูนำทาง -->
+    <nav>
+        <a href="{{ url_for('index') }}">หน้าหลัก</a>
+        <a href="{{ url_for('about') }}">เกี่ยวกับเรา</a>
+        <a href="{{ url_for('contact') }}">ติดต่อเรา</a>
+        <a href="{{ url_for('predict') }}">พยากรณ์</a>
+    </nav>
+
+    <h1>พยากรณ์ผลการรอดชีวิตของ Titanic</h1>
+
+    <form method="POST">
+        <label>ชื่อ:</label>
+        <input type="text" name="name" required>
+
+        <label>ชั้นโดยสาร (Pclass):</label>
+        <select name="Pclass" required>
+            <option value="1">ชั้น 1</option>
+            <option value="2">ชั้น 2</option>
+            <option value="3">ชั้น 3</option>
+        </select>
+
+        <label>เพศ (Sex):</label>
+        <select name="Sex" required>
+            <option value="1">ชาย</option>
+            <option value="0">หญิง</option>
+        </select>
+
+        <label>อายุ (Age):</label>
+        <input type="number" name="Age" step="0.1" required>
+
+        <label>พี่น้อง / คู่สมรส (SibSp):</label>
+        <input type="number" name="SibSp" required>
+
+        <label>พ่อแม่ / ลูก (Parch):</label>
+        <input type="number" name="Parch" required>
+
+        <label>ค่าโดยสาร (Fare):</label>
+        <input type="number" name="Fare" step="0.01" required>
+
+        <label>ท่าเรือขึ้นเรือ (Embarked):</label>
+        <select name="Embarked" required>
+            <option value="0">Southampton (S)</option>
+            <option value="1">Cherbourg (C)</option>
+            <option value="2">Queenstown (Q)</option>
+        </select>
+
+        <button type="submit">พยากรณ์ผล</button>
+    </form>
+
+    {% if prediction is not none %}
+    <h2 class="{{ css_class }}">{{ prediction }}</h2>
+    {% endif %}
+
+</body>
+</html>

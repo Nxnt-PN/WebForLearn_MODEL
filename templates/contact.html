@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ติดต่อเรา</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- เมนูนำทาง -->
+    <nav>
+        <a href="{{ url_for('index') }}">หน้าหลัก</a>
+        <a href="{{ url_for('about') }}">เกี่ยวกับเรา</a>
+        <a href="{{ url_for('contact') }}">ติดต่อเรา</a>
+        <a href="{{ url_for('predict') }}">พยากรณ์</a>
+    </nav>
+
+    <h1>ติดต่อเรา</h1>
+
+    <p>หากคุณมีคำถามหรือข้อเสนอแนะ สามารถติดต่อเราได้ตามรายละเอียดด้านล่าง</p>
+
+    <h2>ข้อมูลการติดต่อ</h2>
+    <p><strong>อีเมล:</strong> support@titanicweb.com</p>
+    <p><strong>โทรศัพท์:</strong> 02-123-4567</p>
+    <p><strong>ที่อยู่:</strong> 123 ถนนไททานิค กรุงเทพฯ 10100</p>
+
+    <h2>ส่งข้อความหาเรา</h2>
+    <form action="{{ url_for('contact') }}" method="POST">
+        <label>ชื่อของคุณ:</label>
+        <input type="text" name="name" required>
+
+        <label>อีเมลของคุณ:</label>
+        <input type="email" name="email" required>
+
+        <label>ข้อความ:</label>
+        <textarea name="message" rows="4" required></textarea>
+
+        <button type="submit">ส่งข้อความ</button>
+    </form>
+
+    {% if success_message %}
+        <h2 style="color: green;">{{ success_message }}</h2>
+    {% endif %}
+
+</body>
+</html>

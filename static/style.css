@@ -1,0 +1,153 @@
+/* ตั้งค่าพื้นฐาน */
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc; /* เทาอ่อน-น้ำเงินสว่าง */
+    color: #333; /* สีข้อความเข้มขึ้น */
+}
+
+/* เมนูนำทาง */
+nav {
+    background: linear-gradient(90deg, #2563eb, #3b82f6); /* ไล่สีฟ้าสว่าง */
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    text-decoration: underline;
+    color: #dbeafe; /* ฟ้าอ่อน */
+}
+
+/* ส่วนหัวข้อ */
+h1 {
+    color: #2563eb; /* น้ำเงินสดใส */
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+/* กล่องเนื้อหา */
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #ffffff; /* สีขาว */
+    padding: 25px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin-top: 20px;
+    border: 3px solid #3b82f6; /* ขอบฟ้า */
+}
+
+/* ปรับแต่งฟอร์ม */
+form {
+    background: #f4f7fc; /* ฟ้าอ่อน */
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    color: #2563eb; /* ฟ้าเข้ม */
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #3b82f6;
+    border-radius: 5px;
+    background: #ffffff; /* ขาว */
+    color: #333;
+}
+
+/* ปุ่มกด */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1e40af;
+    box-shadow: 0px 4px 8px rgba(59, 130, 246, 0.5);
+}
+
+/* กล่องสมการ */
+.equation-box {
+    background-color: #eef2ff;
+    padding: 10px;
+    border-left: 5px solid #3b82f6;
+    margin: 15px 0;
+    font-size: 18px;
+}
+
+/* ตาราง */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 2px solid #3b82f6;
+    padding: 10px;
+}
+
+th {
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* ข้อความ */
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* ผลการพยากรณ์ */
+.survival-high {
+    color: #16a34a; /* เขียวสด */
+    font-weight: bold;
+}
+
+.survival-low {
+    color: #dc2626; /* แดงสด */
+    font-weight: bold;
+}
+
+.error-text {
+    color: #ef4444; /* แดงเข้ม */
+    font-weight: bold;
+}
+
+/* สำหรับมือถือ */
+@media (max-width: 600px) {
+    form {
+        max-width: 90%;
+    }
+}
