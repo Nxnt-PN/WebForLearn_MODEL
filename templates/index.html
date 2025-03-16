@@ -4,28 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>หน้าแรก - Titanic Prediction</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index_style.css') }}">
 </head>
 <body>
 
-    <!-- เมนูนำทาง -->
-    <nav>
-        <a href="{{ url_for('index') }}">หน้าหลัก</a>
-        <a href="{{ url_for('about') }}">เกี่ยวกับเรา</a>
-        <a href="{{ url_for('contact') }}">ติดต่อเรา</a>
-        <a href="{{ url_for('predict') }}">พยากรณ์</a>
-    </nav>
+<!-- เมนูนำทาง -->
+<nav>
+    <ul>
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('about') }}">Titanic Doc</a></li>
+        <li><a href="{{ url_for('contact') }}">House Doc</a></li>
+        <li><a href="{{ url_for('titanic_predict') }}">Titanic Model</a></li>
+        <li><a href="{{ url_for('house_predict') }}">House Model</a></li>
+    </ul>
+</nav>
 
-    <!-- ส่วนหัว -->
-    <header>
-        <h1>ยินดีต้อนรับสู่เว็บไซต์ Titanic Prediction</h1>
-        <p>ใช้โมเดล Machine Learning เพื่อทำนายโอกาสรอดชีวิตจากอุบัติเหตุ Titanic</p>
-    </header>
+<!-- ส่วนหัว -->
+<header>
+    <h1>ยินดีต้อนรับสู่เว็บไซต์ Titanic Prediction</h1>
+    <p>ใช้โมเดล Machine Learning เพื่อทำนายโอกาสรอดชีวิตจากอุบัติเหตุ Titanic</p>
+</header>
 
-    <!-- ปุ่มไปยังหน้าพยากรณ์ -->
-    <section>
-        <a href="{{ url_for('predict') }}" class="btn">เริ่มต้นพยากรณ์</a>
-    </section>
+<!-- ปุ่มไปยังหน้าพยากรณ์ -->
+<section>
+    <a href="{{ url_for('titanic_predict') }}" class="btn">titanic จะรอดไหม</a>
+    <a href="{{ url_for('house_predict') }}" class="btn">ทำนายราคาบ้าน</a>
+</section>
 
 </body>
 </html>

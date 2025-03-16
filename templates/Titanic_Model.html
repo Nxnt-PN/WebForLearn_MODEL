@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พยากรณ์ผล Titanic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='titanic_style.css') }}">
+    <script>
+        // ฟังก์ชันตรวจสอบข้อมูลทันที
+        function validatePclass() {
+            var Pclass = document.getElementById("Pclass").value;
+            var errorPclass = document.getElementById("errorPclass");
+            var submitButton = document.getElementById("submitButton");
+            if (Pclass != 1 && Pclass != 2 && Pclass != 3) {
+                errorPclass.textContent = "⚠️ Pclass ควรเป็น 1, 2, หรือ 3 เท่านั้น";
+                submitButton.disabled = true;  // ปิดการใช้งานปุ่ม submit
+            } else {
+                errorPclass.textContent = "";
+                enableSubmitButton();  // ตรวจสอบว่าเปิดปุ่ม submit
+            }
+        }
+    
+        function validateAge() {
+            var AgeField = document.getElementById("Age");
+            var Age = parseFloat(AgeField.value);
+            var errorAge = document.getElementById("errorAge");
+            var submitButton = document.getElementById("submitButton");
+    
+            // ตรวจสอบอายุที่กรอก
+            if (Age < 1) {
+                errorAge.textContent = "⚠️ อายุไม่สามารถต่ำกว่า 1 ได้";
+                AgeField.value = 1; // ถ้าอายุต่ำกว่า 1 ให้เปลี่ยนเป็น 1
+                submitButton.disabled = true;
+            } else if (Age > 120) {
+                errorAge.textContent = "⚠️ อายุไม่สามารถเกิน 120 ปีได้";
+                AgeField.value = 120; // ถ้าอายุมากกว่า 120 ให้เปลี่ยนเป็น 120
+                submitButton.disabled = true;
+            } else {
+                errorAge.textContent = "";
+                enableSubmitButton();  // ตรวจสอบว่าเปิดปุ่ม submit
+            }
+        }
+    
+        function validateSibSp() {
+            var SibSp = parseInt(document.getElementById("SibSp").value);
+            var errorSibSp = document.getElementById("errorSibSp");
+            var submitButton = document.getElementById("submitButton");
+            if (SibSp < 0) {
+                errorSibSp.textContent = "⚠️ จำนวนพี่น้อง/คู่สมรส (SibSp) ต้องไม่ติดลบ";
+                submitButton.disabled = true;  // ปิดการใช้งานปุ่ม submit
+            } else {
+                errorSibSp.textContent = "";
+                enableSubmitButton();  // ตรวจสอบว่าเปิดปุ่ม submit
+            }
+        }
+    
+        function validateFare() {
+            var Fare = parseFloat(document.getElementById("Fare").value);
+            var errorFare = document.getElementById("errorFare");
+            var submitButton = document.getElementById("submitButton");
+            if (Fare < 0) {
+                errorFare.textContent = "⚠️ ค่าโดยสาร (Fare) ต้องไม่ติดลบ";
+                submitButton.disabled = true;  // ปิดการใช้งานปุ่ม submit
+            } else {
+                errorFare.textContent = "";
+                enableSubmitButton();  // ตรวจสอบว่าเปิดปุ่ม submit
+            }
+        }
+    
+        function enableSubmitButton() {
+            var submitButton = document.getElementById("submitButton");
+            // ตรวจสอบทุกฟิลด์ว่าถูกต้องหรือไม่
+            var Pclass = document.getElementById("Pclass").value;
+            var Age = parseFloat(document.getElementById("Age").value);
+            var SibSp = parseInt(document.getElementById("SibSp").value);
+            var Fare = parseFloat(document.getElementById("Fare").value);
+    
+            if (Pclass == 1 || Pclass == 2 || Pclass == 3) {
+                if (Age >= 1 && Age <= 120) {
+                    if (SibSp >= 0) {
+                        if (Fare >= 0) {
+                            submitButton.disabled = false;  // เปิดการใช้งานปุ่ม submit
+                        }
+                    }
+                }
+            }
+        }
+    
+        window.onload = function () {
+            // ตรวจสอบค่าทันทีที่กรอก
+            document.getElementById("Pclass").addEventListener("input", validatePclass);
+            document.getElementById("Age").addEventListener("input", validateAge);
+            document.getElementById("SibSp").addEventListener("input", validateSibSp);
+            document.getElementById("Fare").addEventListener("input", validateFare);
+        };
+    </script>
+    
+</head>
+<body>
+    <!-- เมนูนำทาง -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">HOME</a></li>
+                <li><a href="{{ url_for('about') }}">Titanic Doc</a></li>
+                <li><a href="{{ url_for('contact') }}">House Doc</a></li>
+                <li><a href="{{ url_for('titanic_predict') }}">Titanic Model</a></li>
+                <li><a href="{{ url_for('house_predict') }}">House Model</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container">
+            <h1>พยากรณ์ผลการรอดชีวิตของ Titanic</h1>
+
+            <form method="POST" class="prediction-form">
+                <div class="form-group">
+                    <label for="name">ชื่อ:</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Pclass">ชั้นโดยสาร (Pclass):</label>
+                    <select name="Pclass" id="Pclass" required>
+                        <option value="1">ชั้น 1</option>
+                        <option value="2">ชั้น 2</option>
+                        <option value="3">ชั้น 3</option>
+                    </select>
+                    <small id="errorPclass" style="color: red;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="Sex">เพศ (Sex):</label>
+                    <select name="Sex" id="Sex" required>
+                        <option value="1">ชาย</option>
+                        <option value="0">หญิง</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Age">อายุ (Age):</label>
+                    <input type="number" name="Age" id="Age" step="0.1" required>
+                    <small id="errorAge" style="color: red;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="SibSp">พี่น้อง / คู่สมรส (SibSp):</label>
+                    <input type="number" name="SibSp" id="SibSp" required>
+                    <small id="errorSibSp" style="color: red;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="Parch">พ่อแม่ / ลูก (Parch):</label>
+                    <input type="number" name="Parch" id="Parch" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Fare">ค่าโดยสาร (Fare):</label>
+                    <input type="number" name="Fare" id="Fare" step="0.01" required>
+                    <small id="errorFare" style="color: red;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="Embarked">ท่าเรือขึ้นเรือ (Embarked):</label>
+                    <select name="Embarked" id="Embarked" required>
+                        <option value="0">Southampton (S)</option>
+                        <option value="1">Cherbourg (C)</option>
+                        <option value="2">Queenstown (Q)</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="submitButton" class="btn-submit" disabled>พยากรณ์ผล</button>
+            </form>
+
+            {% if prediction is not none %}
+                <h2 class="{{ css_class }}">{{ prediction }}</h2>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

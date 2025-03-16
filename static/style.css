@@ -4,13 +4,13 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    background-color: #f4f7fc; /* เทาอ่อน-น้ำเงินสว่าง */
+    background-color: #fdf2f2; /* สีชมพูอ่อน */
     color: #333; /* สีข้อความเข้มขึ้น */
 }
 
 /* เมนูนำทาง */
 nav {
-    background: linear-gradient(90deg, #2563eb, #3b82f6); /* ไล่สีฟ้าสว่าง */
+    background: linear-gradient(90deg, #c53030, #e53e3e); /* ไล่สีแดงเข้ม */
     padding: 15px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -26,12 +26,12 @@ nav a {
 
 nav a:hover {
     text-decoration: underline;
-    color: #dbeafe; /* ฟ้าอ่อน */
+    color: #fed7d7; /* ชมพูอ่อน */
 }
 
 /* ส่วนหัวข้อ */
 h1 {
-    color: #2563eb; /* น้ำเงินสดใส */
+    color: #c53030; /* สีแดงสด */
     margin-top: 20px;
     font-size: 30px;
 }
@@ -40,17 +40,17 @@ h1 {
 .container {
     max-width: 900px;
     margin: auto;
-    background: #ffffff; /* สีขาว */
+    background: #fff5f5; /* สีขาวอมชมพู */
     padding: 25px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin-top: 20px;
-    border: 3px solid #3b82f6; /* ขอบฟ้า */
+    border: 3px solid #e53e3e; /* ขอบสีแดง */
 }
 
 /* ปรับแต่งฟอร์ม */
 form {
-    background: #f4f7fc; /* ฟ้าอ่อน */
+    background: #fdf2f2; /* สีชมพูอ่อน */
     max-width: 500px;
     margin: 20px auto;
     padding: 20px;
@@ -63,44 +63,74 @@ label {
     font-weight: bold;
     display: block;
     margin-top: 10px;
-    color: #2563eb; /* ฟ้าเข้ม */
+    color: #c53030; /* สีแดงเข้ม */
 }
 
 input, select {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border: 2px solid #3b82f6;
+    border: 2px solid #e53e3e;
     border-radius: 5px;
-    background: #ffffff; /* ขาว */
+    background: #ffffff;
     color: #333;
 }
 
-/* ปุ่มกด */
+/* ซ่อนรายละเอียดเมื่อโหลดหน้าเว็บ */
+.hidden {
+    display: none;
+}
+
+/* การตกแต่งปุ่ม */
 button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    background-color: #e53e3e; /* สีพื้นหลัง */
+    color: white; /* สีตัวอักษร */
+    padding: 10px 20px; /* การเพิ่มระยะห่างภายในปุ่ม */
+    border: none; /* ไม่ให้มีเส้นขอบ */
+    border-radius: 5px; /* ทำมุมโค้งให้ปุ่ม */
+    font-size: 16px; /* ขนาดตัวอักษร */
+    cursor: pointer; /* แสดงว่าเป็นปุ่มที่คลิกได้ */
+    transition: background-color 0.3s; /* เอฟเฟกต์การเปลี่ยนสีพื้นหลัง */
+}
+
+/* การเปลี่ยนสีเมื่อโฮเวอร์ */
+button:hover {
+    background-color: #e53e3e; /* สีพื้นหลังที่เปลี่ยนเมื่อวางเมาส์ */
+}
+
+/* การตกแต่ง h4 */
+h4 {
+    color: #c53030; /* สีตัวอักษร */
+    font-size: 18px; /* ขนาดตัวอักษร */
+    font-weight: bold; /* ทำให้ตัวหนา */
+    padding-bottom: 5px; /* ระยะห่างระหว่างข้อความและเส้นใต้ */
+    margin-bottom: 10px; /* ระยะห่างจากส่วนอื่นๆ */
+}
+
+/* ปุ่มกด */
+a.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #e53e3e, #c53030);
     color: white;
-    border: none;
+    text-decoration: none;
     border-radius: 8px;
     font-size: 16px;
-    cursor: pointer;
+    text-align: center;
     transition: 0.3s;
     font-weight: bold;
 }
 
-button:hover {
-    background: #1e40af;
-    box-shadow: 0px 4px 8px rgba(59, 130, 246, 0.5);
+a.button:hover {
+    background: #9b2c2c;
+    box-shadow: 0px 4px 8px rgba(205, 92, 92, 0.5);
 }
 
 /* กล่องสมการ */
 .equation-box {
-    background-color: #eef2ff;
+    background-color: #fbe9e7; /* สีชมพูอ่อน */
     padding: 10px;
-    border-left: 5px solid #3b82f6;
+    border-left: 5px solid #e53e3e;
     margin: 15px 0;
     font-size: 18px;
 }
@@ -113,12 +143,12 @@ table {
 }
 
 table, th, td {
-    border: 2px solid #3b82f6;
+    border: 2px solid #e53e3e;
     padding: 10px;
 }
 
 th {
-    background-color: #3b82f6;
+    background-color: #e53e3e;
     color: white;
 }
 
@@ -144,6 +174,124 @@ p {
     color: #ef4444; /* แดงเข้ม */
     font-weight: bold;
 }
+
+/* สไตล์สำหรับการ์ด */
+.card {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sub-section {
+    margin-top: 20px;
+    padding: 10px;
+    border-left: 5px solid #e53e3e;
+    background: #ffffff;
+    border-radius: 5px;
+}
+
+h3 {
+    color: #e53e3e;
+    border-bottom: 2px solid #e53e3e;
+    padding-bottom: 5px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.data-table th {
+    background: #e53e3e;
+    color: white;
+}
+
+.corr-value {
+    font-weight: bold;
+    color: #d9534f;
+}
+
+.high-corr {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.image-section {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.image-section img {
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* สไตล์สำหรับการ์ด (ใช้กับทุกหัวข้อ) */
+.card.section-1 {
+    background-color: #fde8e8; /* สีชมพูอ่อน */
+    border-left: 6px solid #e53e3e; /* เส้นข้างสีแดงสด */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card.section-1 h3 {
+    color: #c53030; /* สีแดงเข้ม */
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.card.section-1 p {
+    color: #9b2c2c; /* สีแดงเข้ม */
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.card.section-1 ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.card.section-1 li {
+    background: #fbd5d5; /* สีชมพูอ่อนขึ้นมาอีกนิด */
+    color: #c53030; /* สีแดงเข้ม */
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.references {
+    display: none;
+    margin-top: 15px;
+}
+
+/* สไตล์เมื่อเนื้อหาถูกแสดง */
+.references.show {
+    display: block;
+}
+
+/* สไตล์ปุ่ม */
+.toggle-button {
+    background-color: #c53030;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 
 /* สำหรับมือถือ */
 @media (max-width: 600px) {

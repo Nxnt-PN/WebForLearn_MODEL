@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='house_style.css') }}">
+</head>
+<body>
+    <!-- เมนูนำทาง -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">HOME</a></li>
+                <li><a href="{{ url_for('about') }}">Titanic Doc</a></li>
+                <li><a href="{{ url_for('contact') }}">House Doc</a></li>
+                <li><a href="{{ url_for('titanic_predict') }}">Titanic Model</a></li>
+                <li><a href="{{ url_for('house_predict') }}">House Model</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container">
+            <h1>ทำนายราคาบ้าน</h1>
+            <form action="/house" method="POST" class="prediction-form">
+                <div class="form-group">
+                    <label for="GrLivArea">พื้นที่ใช้สอย (GrLivArea - ตารางฟุต):</label>
+                    <input type="number" name="GrLivArea" id="GrLivArea" step="0.01" min="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="OverallQual">คุณภาพบ้าน (OverallQual - 1-10):</label>
+                    <select name="OverallQual" id="OverallQual" required>
+                        <option value="1">1 - แย่มาก</option>
+                        <option value="2">2 - แย่</option>
+                        <option value="3">3 - ต่ำกว่ามาตรฐาน</option>
+                        <option value="4">4 - ปานกลาง</option>
+                        <option value="5">5 - พอใช้</option>
+                        <option value="6">6 - ดี</option>
+                        <option value="7">7 - ดีมาก</option>
+                        <option value="8">8 - ยอดเยี่ยม</option>
+                        <option value="9">9 - สุดยอด</option>
+                        <option value="10">10 - ระดับหรู</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="GarageCars">จำนวนรถที่จอดได้ (GarageCars):</label>
+                    <input type="number" id="GarageCars" name="GarageCars" step="1" min="0" max="4" required>
+                    <small style="color: red;" id="garageError"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="YearBuilt">ปีที่สร้างบ้าน (YearBuilt):</label>
+                    <select name="YearBuilt" id="YearBuilt" required>
+                        {% for year in range(1900, 2025) %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn-submit">ทำนาย</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 All Rights Reserved</p>
+    </footer>
+
+    <script>
+    document.getElementById("GarageCars").addEventListener("input", function () {
+        let value = parseInt(this.value);
+        let errorText = document.getElementById("garageError");
+
+        if (value < 0 || value > 4) {
+            errorText.innerText = "⚠️ จำนวนรถต้องอยู่ระหว่าง 0-4 คัน";
+            this.value = Math.min(Math.max(value, 0), 4); // จำกัดค่าระหว่าง 0-4
+        } else {
+            errorText.innerText = "";
+        }
+    });
+    </script>
+</body>
+</html>

@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 import pickle
 
 # ✅ โหลดข้อมูล Titanic
-data = pd.read_csv(r"C:\titanic_web\model\titanic.csv")  # ใส่ r นำหน้า path
+data = pd.read_csv(r"C:\titanic_web\model\titanic.csv")  # ใส่ r นำหน้า path #ถ้าหาไฟล์csv ไม่เจอแก้ตรงนี้นะ
 
 # ✅ เลือกเฉพาะคอลัมน์ที่ใช้
 data = data[["Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"]]

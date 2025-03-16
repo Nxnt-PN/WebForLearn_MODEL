@@ -1,0 +1,210 @@
+
+<!-- ============================ -->
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำอธิบายโมเดล Titanic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- เพิ่ม JavaScript ในส่วนท้ายของ HTML -->
+    <script>
+        function toggleReferences() {
+            var references = document.querySelector(".references");
+            references.classList.toggle("show");
+        }
+
+        // ฟังก์ชันที่จะให้เนื้อหาแสดงแบบเลื่อนเข้ามา
+        window.onload = function() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                element.classList.add('fade-in');
+            });
+        }
+    </script>
+</head>
+<body>
+
+
+<!-- เมนูนำทาง -->
+<nav>
+    <a href="{{ url_for('index') }}">HOME</a>
+    <a href="{{ url_for('about') }}">Titanic Doc</a>
+    <a href="{{ url_for('contact') }}">House Doc</a>
+    <a href="{{ url_for('titanic_predict') }}">Titanic Model</a>
+    <a href="{{ url_for('house_predict') }}">House Model</a> <!-- เพิ่มลิงก์นี้ -->
+</nav>
+
+
+        <div class="container">
+            <h1>คำอธิบายโมเดล Logistic Regression</h1>
+            <p>โมเดลที่คุณได้พัฒนาเป็น โมเดลการพยากรณ์อัตราการรอดชีวิต (Survival) ของผู้โดยสารใน <strong>Titanic</strong> โดยใช้เทคนิค 
+            <strong>Logistic Regression</strong> ซึ่งเป็นอัลกอริธึมการเรียนรู้ของเครื่องที่ใช้สำหรับการคาดการณ์ค่าของตัวแปรที่เป็น
+            <strong>binary outcome</strong> (เช่น การรอดชีวิตหรือไม่รอดชีวิต) ต่อไปนี้เป็นคำอธิบายเกี่ยวกับทฤษฎีและขั้นตอนการพัฒนาของโมเดลนี้:
+            </p>
+
+            <h2>1.ทฤษฎีของ Logistic Regression</h2>
+            <p>Logistic Regression คือ อัลกอริธึมการเรียนรู้เชิงลึก (supervised learning) ที่ใช้สำหรับ ปัญหาการจำแนกประเภท (classification problem) โดยเฉพาะในการจำแนกประเภทที่มีผลลัพธ์เพียงสองประเภท (binary classification) เช่น ใช่/ไม่ใช่, ตาย/รอด, หรือ 0/1</p>
+            <p>ฟังก์ชันที่ใช้ใน Logistic Regression คือ <strong>Sigmoid function</strong> ซึ่งแปลงค่าของตัวแปรเป็นค่าความน่าจะเป็นที่อยู่ระหว่าง 0 และ 1:</p>
+
+            <div class="equation-box">
+                <p class="equation">
+                    \( \sigma(z) = \frac{1}{1 + e^{-z}} \)
+                </p>
+            </div>
+
+            <p>ที่นี่ \(z\) คือการคำนวณเชิงเส้นของตัวแปรอิสระ เช่น:</p>
+            <div class="equation-box">
+                <p class="equation">
+                    \( z = b_0 + b_1 \cdot X_1 + b_2 \cdot X_2 + \dots + b_n \cdot X_n \)
+                </p>
+            </div>
+
+            <p>ในกรณีนี้ \(X_1, X_2, \dots, X_n\) คือคุณสมบัติหรือฟีเจอร์ของผู้โดยสาร เช่น อายุ (Age), ชั้นโดยสาร (Pclass), เพศ (Sex) และอื่น ๆ</p>
+
+            <h2>การเรียนรู้ของโมเดล</h2>
+            <p>โมเดลจะคำนวณค่าพารามิเตอร์ \(b_0, b_1, b_2, \dots, b_n\) โดยใช้ข้อมูลในชุดการฝึก (Training Data) โดยใช้เทคนิค <strong>Maximum Likelihood Estimation (MLE)</strong> เพื่อหาค่าพารามิเตอร์ที่ทำให้โมเดลทำนายได้ดีที่สุด</p>
+        </div>
+
+
+        <div class="container">
+            <h2>2. ข้อมูลที่ใช้ในโมเดล</h2>
+            <p>โมเดลใช้ข้อมูลจาก Titanic Dataset ซึ่งมีตัวแปรสำคัญดังนี้:</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr style="background-color: #f2f2f2; text-align: center;">
+                        <th style="padding: 8px; border: 1px solid #ddd;">คุณลักษณะ</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">รายละเอียด</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Pclass</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">ชั้นโดยสาร (1, 2, 3)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Sex</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">เพศ (0 = ชาย, 1 = หญิง)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Age</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">อายุของผู้โดยสาร</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">SibSp</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">จำนวนพี่น้อง/คู่สมรส</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Parch</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">จำนวนพ่อแม่/ลูก</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Fare</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">ค่าโดยสาร</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Embarked</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">ท่าเรือที่ขึ้นเรือ (0 = Cherbourg, 1 = Queenstown, 2 = Southampton)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+
+        <div class="container">
+            <h2>3. ขั้นตอนการสร้างโมเดล</h2>
+            <ol>
+                <li><b>โหลดข้อมูล:</b> ใช้ <code>pandas</code> โหลดข้อมูลจากไฟล์ CSV ที่มีข้อมูลผู้โดยสาร Titanic
+                    <pre>
+        data = pd.read_csv(r"C:\titanic_web\model\titanic.csv")
+                    </pre>
+                </li>
+                <li><b>เลือกคอลัมน์ที่ใช้:</b> เลือกเฉพาะคอลัมน์ที่เกี่ยวข้องกับการพยากรณ์: "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"
+                    <pre>
+        data = data[["Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"]]
+                    </pre>
+                </li>
+                <li><b>จัดการกับ Missing Values:</b> ลบแถวที่มีค่า Missing (NaN) เพื่อให้โมเดลทำงานได้โดยไม่เกิดปัญหาจากข้อมูลที่หายไป
+                    <pre>
+        data.dropna(inplace=True)
+                    </pre>
+                </li>
+                <li><b>แปลงข้อมูลที่เป็นตัวอักษรเป็นตัวเลข:</b> ใช้การแปลงค่าตัวอักษรเป็นตัวเลข (Label Encoding) สำหรับคอลัมน์ "Sex" และ "Embarked" เนื่องจาก Logistic Regression ต้องการข้อมูลที่เป็นตัวเลข
+                    <pre>
+        data["Sex"] = data["Sex"].map({"male": 0, "female": 1})
+        data["Embarked"] = data["Embarked"].map({"C": 0, "Q": 1, "S": 2})
+                    </pre>
+                </li>
+                <li><b>แบ่งข้อมูลเป็น Features และ Target:</b> แยกข้อมูลออกเป็น X (Features) และ y (Target)
+                    <pre>
+        X = data.drop("Survived", axis=1)
+        y = data["Survived"]
+                    </pre>
+                </li>
+                <li><b>แบ่งข้อมูลเป็นชุด Training และ Testing:</b> แบ่งข้อมูลเป็นสองชุด:
+                    <ul>
+                        <li>Training set: ใช้สำหรับฝึกโมเดล</li>
+                        <li>Test set: ใช้สำหรับทดสอบความสามารถของโมเดล</li>
+                    </ul>
+                    <pre>
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+                    </pre>
+                </li>
+                <li><b>สร้างและฝึกโมเดล Logistic Regression:</b> สร้างโมเดล Logistic Regression และฝึกโมเดลโดยใช้ข้อมูลในชุด Training
+                    <pre>
+        model = LogisticRegression()
+        model.fit(X_train, y_train)
+                    </pre>
+                </li>
+                <li><b>บันทึกโมเดล:</b> ใช้ <code>pickle</code> ในการบันทึกโมเดลที่ได้ให้เป็นไฟล์ .pkl ซึ่งสามารถนำไปใช้ในภายหลังได้
+                    <pre>
+        with open("model/titanic_model.pkl", "wb") as f:
+            pickle.dump(model, f)
+                    </pre>
+                </li>
+            </ol>
+        </div>
+        
+
+        <div class="container">
+            <h2>4. ผลลัพธ์และความแม่นยำของโมเดล</h2>
+            <p>โมเดลสามารถพยากรณ์ผลรอดชีวิตได้อย่างแม่นยำ โดยมีค่าชี้วัดดังนี้:</p>
+            <ul>
+                <li><b>Accuracy:</b> 80%</li>
+                <li><b>Precision:</b> 78%</li>
+                <li><b>Recall:</b> 75%</li>
+                <li><b>F1-score:</b> 76%</li>
+            </ul>
+        </div>
+        
+
+
+        <section class="content container">
+        <h3>แหล่งข้อมูลอ้างอิง</h3>
+        <button class="toggle-button" onclick="toggleReferences()">แสดง/ซ่อนแหล่งข้อมูลอ้างอิง</button>
+        <div class="references">
+            <ul>
+                <li>
+                    James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). 
+                    <i>An Introduction to Statistical Learning: with Applications in R</i>. Springer. <br>
+                    รายละเอียด: หนังสือเล่มนี้เป็นแหล่งข้อมูลสำคัญในการเรียนรู้เรื่องการเรียนรู้ของเครื่อง (Machine Learning) โดยเฉพาะ Logistic Regression และวิธีการประยุกต์ใช้ในปัญหาต่าง ๆ รวมถึงปัญหาการจำแนกประเภท (Classification) เช่นเดียวกับการพยากรณ์การรอดชีวิตในชุดข้อมูล Titanic.
+                </li>
+                <li>
+                    Cox, D. R., & Snell, E. J. (1989). 
+                    <i>The Analysis of Binary Data</i>. Chapman & Hall/CRC. <br>
+                    รายละเอียด: หนังสือที่ให้ความเข้าใจลึกซึ้งเกี่ยวกับการวิเคราะห์ข้อมูลที่มีผลลัพธ์เป็นสองค่า (Binary Data) ซึ่งเหมาะสมกับการใช้ Logistic Regression ในการพยากรณ์ผลลัพธ์เช่น "รอดชีวิต" หรือ "ไม่รอดชีวิต".
+                </li>
+                <li>
+                    Ng, A. (2017). 
+                    <i>Machine Learning Yearning</i>. Deeplearning.ai. <br>
+                    รายละเอียด: แม้จะเป็นงานที่เน้นการทำความเข้าใจในเชิงลึกเกี่ยวกับ Machine Learning แต่ได้กล่าวถึงวิธีการพัฒนาและประยุกต์ใช้โมเดลต่าง ๆ ในการจำแนกข้อมูล ซึ่งสามารถใช้ในการพัฒนาโมเดล Logistic Regression สำหรับปัญหาต่าง ๆ เช่น การทำนายการรอดชีวิต.
+                </li>
+            </ul>
+        </div>
+        </section>
+    </div>
+
+</body>
+</html>

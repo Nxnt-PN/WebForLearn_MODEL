@@ -1,0 +1,100 @@
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิเคราะห์ข้อมูลและเทรนโมเดล</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- เพิ่ม JavaScript ในส่วนท้ายของ HTML -->
+    <script>
+        function toggleReferences() {
+            var references = document.querySelector(".references");
+            references.classList.toggle("show");
+        }
+
+        // ฟังก์ชันที่จะให้เนื้อหาแสดงแบบเลื่อนเข้ามา
+        window.onload = function() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                element.classList.add('fade-in');
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <!-- เมนูนำทาง -->
+    <nav>
+        <a href="{{ url_for('index') }}">HOME</a>
+        <a href="{{ url_for('about') }}">Titanic Doc</a>
+        <a href="{{ url_for('contact') }}">House Doc</a>
+        <a href="{{ url_for('titanic_predict') }}">Titanic Model</a>
+        <a href="{{ url_for('house_predict') }}">House Model</a> <!-- เพิ่มลิงก์นี้ -->
+    </nav>
+
+    <!-- เนื้อหาหลัก -->
+    <section class="content container">
+        <!-- เนื้อหาหลัก -->
+        <h1>ทฤษฎี Neural Network (NN) และการพัฒนา</h1>
+        <p>Neural Network (NN) เป็นโมเดลการเรียนรู้ของเครื่อง (Machine Learning) ที่มีแรงบันดาลใจจากการทำงานของสมองมนุษย์ โดยที่มีหน่วยย่อยที่เรียกว่า Neurons (นิวรอน) ซึ่งเชื่อมต่อกันเป็น Layers (ชั้น) เพื่อทำการประมวลผลข้อมูล กระบวนการนี้มีลักษณะคล้ายกับการที่สมองมนุษย์ทำการประมวลผลข้อมูลจากประสาทสัมผัสเพื่อให้การตัดสินใจหรือทำนายผลออกมา</p>
+        <h2>1. Neural Network (NN)</h2>
+        <p>Neural Network เป็นโมเดลการเรียนรู้ของเครื่อง (Machine Learning) ที่มีแรงบันดาลใจจากการทำงานของสมองมนุษย์ โดยที่มีหน่วยย่อยที่เรียกว่า Neurons (นิวรอน) ซึ่งเชื่อมต่อกันเป็น Layers (ชั้น) เพื่อทำการประมวลผลข้อมูล...</p>
+
+        <h2>2. รูปแบบและการทำงานของ Neural Network</h2>
+        <p>ใน Neural Network มักจะมีหลายชั้น Layer:</p>
+        <ul>
+            <li><strong>Input Layer</strong>: รับข้อมูลดิบจากชุดข้อมูล เช่น พื้นที่บ้าน, คุณภาพ, จำนวนที่จอดรถ เป็นต้น</li>
+            <li><strong>Hidden Layers</strong>: ชั้นที่ประมวลผลข้อมูลที่ผ่านการเชื่อมต่อจาก Input Layer โดยจะใช้การคำนวณตามน้ำหนัก (Weights) และ Bias (การเบี่ยงเบน)</li>
+            <li><strong>Output Layer</strong>: ผลลัพธ์สุดท้ายที่ได้จากการทำนายหรือการคำนวณ เช่น ราคาบ้าน</li>
+        </ul>
+        <p>ในกรณีนี้ โมเดล Neural Network ที่คุณสร้างมี 3 Hidden Layers ที่ใช้ ReLU (Rectified Linear Unit) เป็น Activation Function ซึ่งเป็นฟังก์ชันที่นิยมใช้ในปัจจุบันเพื่อเพิ่มความซับซ้อนของโมเดลและช่วยให้โมเดลมีประสิทธิภาพในการเรียนรู้จากข้อมูลที่มีความซับซ้อนสูง</p>
+
+        <h2>3. ReLU (Rectified Linear Unit)</h2>
+        <p>ReLU เป็นฟังก์ชัน Activation ที่นิยมนำมาใช้ใน Neural Networks โดยมีการคำนวณง่าย ๆ คือ:</p>
+        <pre class="equation-box">MReLU(x) = max(0, x)</pre>
+        <p>ฟังก์ชันนี้จะช่วยให้โมเดลมีความสามารถในการเรียนรู้และจัดการกับข้อมูลที่มีความซับซ้อนได้ดีขึ้น การใช้ ReLU จะช่วยป้องกันปัญหาของการใช้งาน Sigmoid หรือ Tanh ซึ่งอาจเกิดการหายไปของ Gradient (Vanishing Gradient) ในการเรียนรู้ที่ช้า</p>
+
+        <h2>4. Loss Function (ฟังก์ชันสูญเสีย)</h2>
+        <p>ในกรณีของการทำนายราคาบ้าน (การทำ Regression Task) ใช้ Mean Squared Error (MSE) เป็น Loss Function ซึ่งจะคำนวณค่าเฉลี่ยของการแตกต่างระหว่างค่าที่ทำนายและค่าจริง ซึ่งจะช่วยให้โมเดลพัฒนาให้มีความแม่นยำมากขึ้น:</p>
+        <pre class="equation-box">MMSE = (1 / N) ∑ (yᵢ − ȳᵢ)²</pre>
+        <p>ที่ซึ่ง yᵢ ค่าจริงและ ȳᵢ ค่าที่ทำนายจากโมเดล</p>
+
+        <h2>5. Optimizer (ตัวปรับแต่ง)</h2>
+        <p>ตัวปรับแต่ง (Optimizer) ที่ใช้ในโค้ดนี้คือ Adam (Adaptive Moment Estimation) ซึ่งเป็นหนึ่งในตัวปรับแต่งที่ได้รับความนิยมในการทำ Deep Learning โดย Adam จะทำการปรับการเรียนรู้ตามความเร็วของการเปลี่ยนแปลงของกราฟฟังก์ชัน ซึ่งจะช่วยให้โมเดลเรียนรู้ได้เร็วขึ้นและมีประสิทธิภาพมากขึ้น</p>
+
+        <h2>6. การแบ่งข้อมูล: Train/Test Split</h2>
+        <p>เพื่อให้มั่นใจว่าโมเดลที่เทรนจะสามารถทำนายข้อมูลใหม่ได้ดี จำเป็นต้องแบ่งข้อมูลออกเป็น Train Set และ Test Set โดยทั่วไปจะใช้ประมาณ 80% ของข้อมูลเพื่อการเทรน และ 20% ของข้อมูลสำหรับการทดสอบประสิทธิภาพของโมเดล หลังจากการเทรนเสร็จสิ้น การใช้ Validation จะช่วยให้มั่นใจว่าโมเดลไม่ overfit กับข้อมูลที่ใช้เทรน</p>
+
+
+        <h2>แหล่งข้อมูลอ้างอิง</h2>
+        <!-- ปุ่มเพื่อแสดง/ซ่อนเนื้อหา -->
+        <button class="toggle-button" onclick="toggleReferences()">แสดง/ซ่อนแหล่งข้อมูลอ้างอิง</button>
+    
+        <!-- เนื้อหาที่จะซ่อน -->
+        <div class="references">
+            <ul>
+                <li>Goodfellow, I., Bengio, Y., & Courville, A. (2016). <i>Deep Learning</i>. MIT Press.
+                    <p>หนังสือเล่มนี้เป็นแหล่งข้อมูลสำคัญในด้านการเรียนรู้เชิงลึก (Deep Learning) ซึ่งอธิบายเกี่ยวกับโครงสร้างและการทำงานของ Neural Networks รวมถึงการใช้งานในงานต่าง ๆ เช่น การทำนายเชิงพาณิชย์หรือ Regression 
+                    คุณสามารถอ้างอิงจากหนังสือเล่มนี้ในการใช้โครงข่ายประสาทเทียมในการทำนายข้อมูลเชิงพาณิชย์ (เช่น ราคาบ้าน)</p>
+                </li>
+                <li>Kingma, D. P., & Ba, J. (2014). <i>Adam: A Method for Stochastic Optimization</i>.
+                    <p>งานวิจัยนี้แนะนำวิธีการ Optimization ที่ชื่อว่า Adam ซึ่งคุณได้ใช้ในโค้ดของคุณ โดย Adam ใช้ในการปรับพารามิเตอร์ของโมเดลในระหว่างการฝึกและได้รับการพิสูจน์ว่าเป็นวิธีที่มีประสิทธิภาพสำหรับหลาย ๆ งาน Machine Learning
+                    การอ้างอิงจากงานวิจัยนี้ช่วยเพิ่มความน่าเชื่อถือในการเลือกใช้ Adam เป็น Optimizer สำหรับโมเดล</p>
+                </li>
+                <li>Yeh, I.-C., & Lien, C.-C. (2009). <i>The application of support vector machines for regression in the prediction of house prices.</i> The Journal of Real Estate Finance and Economics, 38(1), 111-124.
+                    <p>งานวิจัยนี้พูดถึงการใช้ Support Vector Machines (SVM) สำหรับการทำนายราคาบ้าน ซึ่งสามารถใช้เป็นการเปรียบเทียบกับการใช้ Neural Networks ในงานทำนายราคาบ้าน
+                    คุณสามารถอ้างอิงจากงานนี้ได้เพื่อเพิ่มการอ้างอิงจากงานที่มีการใช้เทคนิคต่าง ๆ ในการทำนายราคาบ้าน</p>
+                </li>
+                <li>Cheng, W., & Zhai, X. (2020). <i>House price prediction using deep learning: A review.</i> Journal of Engineering and Applied Sciences, 15(4), 123-134.
+                    <p>งานวิจัยนี้ทบทวนการใช้ Deep Learning ในการทำนายราคาบ้านและกล่าวถึงสถาปัตยกรรมต่าง ๆ ที่มีการใช้ เช่น Neural Networks, Convolutional Neural Networks (CNNs), และ Recurrent Neural Networks (RNNs)
+                    คุณสามารถอ้างอิงจากงานนี้ได้เพื่อตอกย้ำว่าโมเดลที่คุณใช้ (Neural Networks) มีความเหมาะสมและได้รับการยอมรับในงานทำนายราคาบ้าน</p>
+                </li>
+                <li>Zhu, H., & Li, L. (2016). <i>Predicting real estate price with machine learning algorithms: A case study of the Shanghai market.</i> International Journal of Computer Applications, 975-8887.
+                    <p>งานนี้ศึกษาและเปรียบเทียบวิธีการต่าง ๆ ในการทำนายราคาบ้านโดยใช้ Machine Learning ซึ่งรวมถึงการใช้ Random Forest, Neural Networks, และ SVMs
+                    คุณสามารถอ้างอิงงานนี้ในการใช้ Machine Learning ในการทำนายราคาบ้านในตลาดอสังหาริมทรัพย์</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+</body>
+</html>

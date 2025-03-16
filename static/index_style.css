@@ -1,0 +1,111 @@
+/* Style สำหรับการตกแต่งพื้นฐาน */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9;  /* สีพื้นหลังอ่อน */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+nav {
+    background-color: #d32f2f;  /* สีแดงเข้ม */
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin: 0 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ffcc00;  /* สีเหลืองเมื่อ hover */
+}
+
+/* ส่วนหัว */
+header {
+    background: linear-gradient(135deg, #d32f2f, #f44336);  /* ใช้สีแดงเข้มถึงแดงสด */
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 5px solid #ffcc00;  /* เส้นขอบสีเหลือง */
+}
+
+header h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2em;
+}
+
+section {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.btn {
+    background-color: #ffcc00;  /* สีเหลือง */
+    color: #333;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #f44336;  /* สีแดงเมื่อ hover */
+    transform: scale(1.05);
+}
+
+/* เพิ่ม animation สำหรับลูกเล่น */
+header h1 {
+    animation: fadeIn 2s ease-out;
+}
+
+.btn {
+    animation: pulse 2s infinite;
+}
+
+/* Keyframes สำหรับ Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

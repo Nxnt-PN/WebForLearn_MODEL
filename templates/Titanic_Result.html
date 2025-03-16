@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ผลลัพธ์การทำนาย Titanic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='result_page.css') }}">
+</head>
+<body>
+
+<nav>
+    <a href="{{ url_for('index') }}">HOME</a>
+    <a href="{{ url_for('about') }}">Titanic Doc</a>
+    <a href="{{ url_for('contact') }}">House Doc</a>
+    <a href="{{ url_for('titanic_predict') }}">Titanic Model</a>
+    <a href="{{ url_for('house_predict') }}">House Model</a>
+</nav>
+
+<main>
+    <h1>ผลการทำนายการรอดชีวิตจาก Titanic</h1>
+
+    {% if result is not none %}
+        <div class="result-box fade-in">
+            <p>ผลการทำนาย: <strong>{{ result }}</strong></p>
+            <div class="alert" id="alert-box">
+                <p>การทำนายอาจมีความคลาดเคลื่อน ขึ้นอยู่กับข้อมูลที่ป้อนเข้ามา</p>
+            </div>
+            <a href="{{ url_for('titanic_predict') }}" class="btn">กลับไปกรอกข้อมูลใหม่</a>
+        </div>
+    {% else %}
+        <p>ยังไม่มีการทำนาย</p>
+        <a href="{{ url_for('titanic_predict') }}" class="btn">กรุณากรอกข้อมูลใหม่</a>
+    {% endif %}
+</main>
+
+<script>
+    setTimeout(function() {
+        document.getElementById('alert-box').style.display = 'block';
+    }, 2000);  // จะแสดงหลังจาก 2 วินาที
+</script>
+
+</body>
+</html>
